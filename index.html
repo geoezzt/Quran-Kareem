@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>القرآن الكريم — التجويد</title>
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light;--fs:22px;--gold:#c8a951;--bg:#fdf8ed;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#1c1008;font-family:'Scheherazade New','Traditional Arabic',serif;direction:rtl;}
+
+header{background:linear-gradient(135deg,#0c3520,#155233);padding:8px 14px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:2px solid var(--gold);}
+.htitle{color:var(--gold);font-size:1.2rem;font-weight:700;}
+.htitle small{display:block;font-size:.6rem;color:#aaa;font-family:sans-serif;font-weight:400;}
+.hctrl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.fbx{display:flex;align-items:center;gap:4px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:3px 8px;}
+.fbx span{color:#ddd;font-size:.72rem;font-family:sans-serif;min-width:40px;text-align:center;}
+.ib{background:rgba(255,255,255,.15);border:none;color:#fff;width:24px;height:24px;border-radius:5px;font-size:1rem;cursor:pointer;}
+.ib:hover{background:rgba(255,255,255,.28);}
+select{padding:4px 8px;border-radius:7px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.1);color:#fff;font-family:inherit;font-size:.82rem;cursor:pointer;}
+select option{background:#1a1a1a;}
+audio{height:30px;width:160px;}
+
+.lgd{background:rgba(0,0,0,.38);padding:5px 10px;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;border-bottom:1px solid rgba(255,255,255,.06);}
+.li{display:flex;align-items:center;gap:3px;font-size:.68rem;color:#ccc;}
+.lc{width:9px;height:9px;border-radius:2px;}
+
+.nav{display:flex;justify-content:space-between;align-items:center;padding:5px 12px;background:rgba(0,0,0,.35);}
+.nbtn{background:var(--gold);color:#1a0e00;border:none;padding:5px 13px;border-radius:7px;cursor:pointer;font-family:sans-serif;font-weight:bold;font-size:.8rem;}
+.nbtn:hover{filter:brightness(1.1);}
+.nbtn:disabled{opacity:.3;cursor:not-allowed;}
+.pinfo{color:var(--gold);font-family:sans-serif;font-size:.75rem;text-align:center;}
+
+.spread{display:flex;justify-content:center;gap:7px;padding:8px 5px;max-width:1350px;margin:0 auto;}
+.mpage{background:var(--bg);border:3px solid #9b7722;border-radius:3px;width:48%;max-width:580px;min-height:78vh;padding:10px 16px 7px;display:flex;flex-direction:column;position:relative;box-shadow:4px 4px 18px rgba(0,0,0,.55);}
+.mpage::before{content:'';position:absolute;inset:5px;border:1px solid #c8a95130;pointer-events:none;}
+.pg-hd,.pg-ft{text-align:center;color:#7a5510;font-size:.6rem;font-family:sans-serif;padding:2px 0;flex-shrink:0;}
+.pg-hd{border-bottom:1px solid #c8a95120;margin-bottom:3px;}
+.pg-ft{border-top:1px solid #c8a95120;margin-top:3px;}
+
+.lw{flex:1;display:flex;flex-direction:column;justify-content:space-between;}
+.qline{display:flex;flex-wrap:nowrap;flex-direction:row;justify-content:space-between;align-items:flex-end;min-height:0;flex:1;}
+.qline.c{justify-content:center;gap:4px;}
+.sbar{display:flex;align-items:center;justify-content:center;flex:1;font-size:.75em;font-weight:700;color:#4a2800;border-top:1px solid #c8a95140;border-bottom:1px solid #c8a95140;}
+
+/* كل كلمة: label فوق، نص تحت */
+.tw{display:inline-flex;flex-direction:column;align-items:center;vertical-align:bottom;}
+.tw-a{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-height:20px;}
+.tw-l{font-size:.33rem;font-weight:bold;padding:1px 4px;border-radius:3px;color:#fff;white-space:nowrap;cursor:pointer;font-family:'Scheherazade New',serif;line-height:1.5;transition:transform .1s;}
+.tw-l:hover{transform:scale(1.18);}
+.tw-r{font-size:.27rem;color:#888;white-space:nowrap;line-height:1.2;font-family:'Scheherazade New',serif;}
+.tw-t{font-size:var(--fs);line-height:1.1;white-space:nowrap;}
+
+.ikh .tw-l{background:#217a21;} .ikh .tw-t{color:#217a21;}
+.iq  .tw-l{background:#660077;} .iq  .tw-t{color:#660077;}
+.idg .tw-l{background:#0070aa;} .idg .tw-t{color:#0070aa;}
+.idb .tw-l{background:#005e50;} .idb .tw-t{color:#005e50;}
+.it  .tw-l{background:#5c3a10;} .it  .tw-t{color:#5c3a10;}
+.qlq .tw-l{background:#7a0040;} .qlq .tw-t{color:#7a0040;}
+.gh  .tw-l{background:#b01060;} .gh  .tw-t{color:#b01060;}
+.iks .tw-l{background:#9900aa;} .iks .tw-t{color:#9900aa;}
+.idm .tw-l{background:#004400;} .idm .tw-t{color:#004400;}
+
+.avn{font-size:.45em;color:#8b6512;cursor:pointer;margin:0 1px;font-family:'Scheherazade New',serif;align-self:flex-end;flex-shrink:0;}
+.avn:hover{color:#c8a951;}
+
+#ov{display:none;position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.45);}
+#pp{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:#111;color:#fff;padding:16px 20px;border-radius:13px;border:2px solid var(--gold);z-index:9999;min-width:260px;max-width:330px;text-align:right;direction:rtl;box-shadow:0 10px 40px rgba(0,0,0,.8);animation:pani .2s ease;}
+@keyframes pani{from{transform:translate(-50%,-50%)scale(.8);opacity:0}to{transform:translate(-50%,-50%)scale(1);opacity:1}}
+#pp .pt{font-size:1.3rem;font-weight:bold;color:#f0d060;margin-bottom:5px;}
+#pp .ps{font-size:.72rem;color:#aaa;margin-bottom:8px;font-family:sans-serif;}
+#pp .pb{font-size:.87rem;color:#ddd;line-height:1.8;}
+#pp .px{position:absolute;top:9px;left:12px;background:none;border:none;color:#888;font-size:.9rem;cursor:pointer;}
+#pp .px:hover{color:#fff;}
+.msg{text-align:center;color:#888;font-family:sans-serif;font-size:.83rem;padding:28px 10px;}
+@media(max-width:700px){.spread{flex-direction:column;align-items:center}.mpage{width:98%;max-width:98%}audio{width:130px}}
+</style>
+</head>
+<body>
+
+<div id="ov" onclick="closeP()"></div>
+<div id="pp">
+  <button class="px" onclick="closeP()">&#10005;</button>
+  <div class="pt" id="pt"></div>
+  <div class="ps" id="ps"></div>
+  <div class="pb" id="pb"></div>
+</div>
+
+<header>
+  <div class="htitle">القرآن الكريم <small>مصحف التجويد · اضغط اسم الحكم فوق الكلمة للشرح · اضغط ﴿الآية﴾ للاستماع</small></div>
+  <div class="hctrl">
+    <div class="fbx">
+      <button class="ib" onclick="cfs(-2)">&#8722;</button>
+      <span id="fsl">22px</span>
+      <button class="ib" onclick="cfs(+2)">+</button>
+    </div>
+    <select id="sh">
+      <option value="Alafasy_128kbps">مشاري راشد العفاسي</option>
+      <option value="Abdul_Basit_Murattal_192kbps">عبد الباسط عبد الصمد</option>
+      <option value="Husary_128kbps">محمود خليل الحصري</option>
+      <option value="Minshawi_Murattal_128kbps">محمد صديق المنشاوي</option>
+      <option value="Ghamadi_40kbps">سعد الغامدي</option>
+    </select>
+    <audio id="au" controls></audio>
+  </div>
+</header>
+
+<div class="lgd">
+  <div class="li"><span class="lc" style="background:#217a21"></span>إخفاء</div>
+  <div class="li"><span class="lc" style="background:#660077"></span>إقلاب</div>
+  <div class="li"><span class="lc" style="background:#0070aa"></span>إدغام بغنة</div>
+  <div class="li"><span class="lc" style="background:#005e50"></span>إدغام بغير غنة</div>
+  <div class="li"><span class="lc" style="background:#9900aa"></span>إخفاء شفوي</div>
+  <div class="li"><span class="lc" style="background:#004400"></span>إدغام شفوي</div>
+  <div class="li"><span class="lc" style="background:#b01060"></span>غنة</div>
+  <div class="li"><span class="lc" style="background:#7a0040"></span>قلقلة</div>
+  <div class="li"><span class="lc" style="background:#5c3a10"></span>إظهار حلقي</div>
+</div>
+
+<div class="nav">
+  <button class="nbtn" id="pb1" onclick="go(-2)">&#9668; السابق</button>
+  <div class="pinfo" id="pi1"></div>
+  <button class="nbtn" id="nb1" onclick="go(+2)">التالي &#9658;</button>
+</div>
+<div class="spread">
+  <div class="mpage" id="pR"><div class="msg">جارٍ التحميل…</div></div>
+  <div class="mpage" id="pL"><div class="msg">جارٍ التحميل…</div></div>
+</div>
+<div class="nav">
+  <button class="nbtn" onclick="go(-2)">&#9668; السابق</button>
+  <div class="pinfo" id="pi2"></div>
+  <button class="nbtn" onclick="go(+2)">التالي &#9658;</button>
+</div>
+
+<script>
+'use strict';
+var IG=new Set(['ي','ن','م','و']),IB=new Set(['ل','ر']),IZ=new Set(['ء','ه','ع','غ','ح','خ']);
+var EXP={
+  ikh:{t:'إخفاء',b:'النون الساكنة أو التنوين قبل أحد حروف الإخفاء الخمسة عشر تُنطق مع الغنة وإخفاء النون. الحروف: ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك'},
+  iq :{t:'إقلاب',b:'إذا جاء بعد النون الساكنة أو التنوين حرف الباء قُلبت ميماً مع الغنة والإخفاء. مثال: مِن بَعْد'},
+  idg:{t:'إدغام بغنة',b:'إذا جاء بعد النون الساكنة أو التنوين أحد حروف (ي ن م و) أُدغمت مع بقاء الغنة. مثال: هُدًى لِّلْمُتَّقِينَ'},
+  idb:{t:'إدغام بغير غنة',b:'إذا جاء بعد النون الساكنة أو التنوين اللام أو الراء أُدغمت بلا غنة. مثال: مِن رَّبِّهِمْ'},
+  it :{t:'إظهار حلقي',b:'إذا جاء بعد النون الساكنة أو التنوين أحد حروف الحلق (ء ه ع غ ح خ) وجب إظهارها. مثال: أَنْعَمْتَ'},
+  qlq:{t:'قلقلة',b:'اهتزاز الصوت عند النطق بأحد حروف القلقلة (ق ط ب ج د) حال سكونها. مثال: يَقْطَعُون'},
+  gh :{t:'غنة',b:'صوت أغن يخرج من الخيشوم عند النون أو الميم المشددتين مقداره حركتان. مثال: إنَّ — أمَّا'},
+  iks:{t:'إخفاء شفوي',b:'إذا جاء بعد الميم الساكنة حرف الباء وجب إخفاء الميم مع الغنة. مثال: تَرْمِيهِم بِحِجَارَة'},
+  idm:{t:'إدغام شفوي',b:'إذا جاء بعد الميم الساكنة ميم أخرى وجب إدغامهما مع الغنة. مثال: لَهُم مَّا'}
+};
+function fAr(s){for(var i=0;i<s.length;i++){if(/[ء-ي]/.test(s[i]))return s[i];}return '';}
+function nRule(fl,src){
+  if(!fl)return null;
+  if(fl==='ب')   return{cls:'iq' ,lbl:'إقلاب'         ,rsn:src+' + ب'};
+  if(IG.has(fl)) return{cls:'idg',lbl:'إدغام بغنة'    ,rsn:src+' + '+fl};
+  if(IB.has(fl)) return{cls:'idb',lbl:'إدغام بغير غنة',rsn:src+' + '+fl};
+  if(IZ.has(fl)) return{cls:'it' ,lbl:'إظهار حلقي'    ,rsn:src+' + '+fl};
+  return              {cls:'ikh',lbl:'إخفاء'          ,rsn:src+' + '+fl};
+}
+function analyze(w,nw){
+  var mg=w.match(/[نم]ّ/);if(mg)return{cls:'gh',lbl:'غنة',rsn:(mg[0][0]==='ن'?'نون':'ميم')+' مشددة'};
+  var mq=w.match(/[قطبجد]ْ/);if(mq)return{cls:'qlq',lbl:'قلقلة',rsn:'"'+mq[0][0]+'" ساكنة'};
+  var ni=w.indexOf('نْ');
+  if(ni>=0){var af=w.slice(ni+2),fl=fAr(af);if(fl){var r=nRule(fl,'ن ساكنة');if(r)return r;}}
+  var mi=w.indexOf('مْ');
+  if(mi>=0){var af2=fAr(w.slice(mi+2));if(af2==='ب')return{cls:'iks',lbl:'إخفاء شفوي',rsn:'م ساكنة + ب'};if(af2==='م')return{cls:'idm',lbl:'إدغام شفوي',rsn:'م ساكنة + م'};}
+  var hT=/[ًٌٍ]/.test(w),hN=/نْ$/.test(w);
+  if((hT||hN)&&nw){
+    var nw2=nw.replace(/^[وفبلك][َُِ]?/,''),fl2=fAr(nw2);
+    if(fl2==='ا'||fl2==='ٱ')fl2=fAr(nw2.slice(1))||fl2;
+    var r2=nRule(fl2,hT?'تنوين':'ن ساكنة');if(r2)return r2;
+  }
+  if(/مْ$/.test(w)&&nw){var fl3=fAr(nw);if(fl3==='ب')return{cls:'iks',lbl:'إخفاء شفوي',rsn:'م ساكنة + ب'};if(fl3==='م')return{cls:'idm',lbl:'إدغام شفوي',rsn:'م ساكنة + م'};}
+  return null;
+}
+function toAr(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});}
+
+function wHTML(text,rule){
+  if(!text)return '';
+  if(rule){
+    var rsn=rule.rsn.replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    return '<span class="tw '+rule.cls+'">'
+      +'<span class="tw-a">'
+        +'<span class="tw-l" data-cls="'+rule.cls+'" data-lbl="'+rule.lbl+'" data-rsn="'+rsn+'">'+rule.lbl+'</span>'
+        +'<span class="tw-r">'+rule.rsn+'</span>'
+      +'</span>'
+      +'<span class="tw-t">'+text+'</span>'
+    +'</span>';
+  }
+  return '<span class="tw"><span class="tw-a"></span><span class="tw-t">'+text+'</span></span>';
+}
+function endHTML(s,a){return '<span class="avn" data-s="'+s+'" data-a="'+a+'">&#xFD3E;'+toAr(a)+'&#xFD3F;</span>';}
+
+var ptmr;
+function showP(cls,lbl,rsn){
+  var e=EXP[cls]||{t:lbl,b:rsn};
+  document.getElementById('pt').textContent=e.t;
+  document.getElementById('ps').textContent=rsn;
+  document.getElementById('pb').textContent=e.b;
+  document.getElementById('ov').style.display='block';
+  document.getElementById('pp').style.display='block';
+  clearTimeout(ptmr);ptmr=setTimeout(closeP,10000);
+  if(window.speechSynthesis){
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(e.t+'. '+e.b);
+    u.lang='ar-SA';u.rate=0.87;
+    var av=speechSynthesis.getVoices().find(function(v){return v.lang&&v.lang.startsWith('ar');});
+    if(av)u.voice=av;
+    speechSynthesis.speak(u);
+  }
+}
+function closeP(){
+  document.getElementById('ov').style.display='none';
+  document.getElementById('pp').style.display='none';
+  if(window.speechSynthesis)speechSynthesis.cancel();
+}
+if(window.speechSynthesis){speechSynthesis.getVoices();speechSynthesis.onvoiceschanged=function(){speechSynthesis.getVoices();};}
+
+var curPage=1,fs=22,cache={};
+var TOTAL=604,LINES=15;
+
+function cfs(d){fs=Math.min(38,Math.max(13,fs+d));document.documentElement.style.setProperty('--fs',fs+'px');document.getElementById('fsl').textContent=fs+'px';}
+function go(d){var p=curPage+d;if(p<1||p>TOTAL)return;curPage=p;loadSpread();}
+function syncNav(){
+  var t='صفحة '+toAr(curPage)+' — '+toAr(Math.min(curPage+1,TOTAL))+' | من '+toAr(TOTAL)+' صفحة';
+  document.getElementById('pi1').textContent=t;document.getElementById('pi2').textContent=t;
+  document.getElementById('pb1').disabled=curPage<=1;document.getElementById('nb1').disabled=curPage>=TOTAL-1;
+}
+function playAyah(s,a){
+  var el=document.getElementById('au');
+  el.src='https://everyayah.com/data/'+document.getElementById('sh').value+'/'+String(s).padStart(3,'0')+String(a).padStart(3,'0')+'.mp3';
+  el.play().catch(function(){});
+}
+
+async function fetchPage(num){
+  if(num<1||num>TOTAL)return null;
+  if(cache[num])return cache[num];
+  try{
+    var r=await fetch('https://api.alquran.cloud/v1/page/'+num+'/quran-uthmani');
+    var j=await r.json();
+    if(j.code===200&&j.data&&j.data.ayahs&&j.data.ayahs.length){cache[num]=j.data;return j.data;}
+  }catch(e){console.warn('fetch error',e);}
+  return null;
+}
+
+function buildTokens(data){
+  var ayahs=data.ayahs,tokens=[],lastSurah=-1;
+  ayahs.forEach(function(ayah,ai){
+    var sn=ayah.surah.number,an=ayah.numberInSurah;
+    if(sn!==lastSurah){
+      lastSurah=sn;
+      tokens.push({type:'surah',name:ayah.surah.name});
+      if(sn!==9&&an===1)tokens.push({type:'basmala'});
+    }
+    var words=ayah.text.trim().split(/\s+/).filter(Boolean);
+    if(an===1&&sn!==1&&sn!==9&&words.length>4&&words[0]==='بِسْمِ')words=words.slice(4);
+    var nxAyah=ayahs[ai+1],nw0=nxAyah?nxAyah.text.trim().split(/\s+/)[0]:'';
+    words.forEach(function(w,wi){
+      tokens.push({type:'word',text:w,rule:analyze(w,wi<words.length-1?words[wi+1]:nw0),surah:sn,ayah:an});
+    });
+    tokens.push({type:'end',surah:sn,ayah:an});
+  });
+  return tokens;
+}
+
+function distributeLines(tokens,nLines){
+  var segments=[],wordBuf=[];
+  tokens.forEach(function(t){
+    if(t.type==='surah'||t.type==='basmala'){
+      if(wordBuf.length){segments.push({isText:true,words:wordBuf.slice()});wordBuf=[];}
+      segments.push({isSpecial:true,tok:t});
+    }else{wordBuf.push(t);}
+  });
+  if(wordBuf.length)segments.push({isText:true,words:wordBuf.slice()});
+
+  var specCount=segments.filter(function(s){return s.isSpecial;}).length;
+  var textSlots=Math.max(1,nLines-specCount);
+  var totalWords=segments.reduce(function(a,s){return a+(s.isText?s.words.length:0);},0);
+  if(!totalWords){var o=[];while(o.length<nLines)o.push([]);return o;}
+  var textSegs=segments.filter(function(s){return s.isText;});
+  textSegs.forEach(function(s){s.aLines=Math.max(1,Math.round(textSlots*s.words.length/totalWords));});
+  var asgn=textSegs.reduce(function(a,s){return a+s.aLines;},0);
+  if(textSegs.length)textSegs[textSegs.length-1].aLines+=(textSlots-asgn);
+
+  var result=[];
+  segments.forEach(function(seg){
+    if(seg.isSpecial){result.push([seg.tok]);}
+    else{
+      var n=seg.aLines,w=seg.words,per=Math.ceil(w.length/n);
+      for(var i=0;i<n;i++)result.push(w.slice(i*per,(i+1)*per));
+    }
+  });
+  while(result.length<nLines)result.push([]);
+  return result.slice(0,nLines);
+}
+
+function renderOnePage(data,pgNum){
+  if(!data)return '<div class="msg">تعذّر تحميل الصفحة<br><small style="font-family:sans-serif">تحقق من الاتصال بالإنترنت</small></div>';
+  var juz=data.ayahs[0].juz||1;
+  var tokens=buildTokens(data);
+  var lines=distributeLines(tokens,LINES);
+
+  var h='<div class="pg-hd">الجزء '+toAr(juz)+' &nbsp;·&nbsp; صفحة '+toAr(pgNum)+'</div>';
+  h+='<div class="lw">';
+
+  lines.forEach(function(line){
+    if(!line.length){h+='<div class="qline"></div>';return;}
+    var f=line[0];
+    if(f.type==='surah'){
+      h+='<div class="qline c"><div class="sbar">سورة '+f.name+'</div></div>';return;
+    }
+    if(f.type==='basmala'){
+      h+='<div class="qline c">'
+        +wHTML('بِسْمِ',null)+wHTML('ٱللَّهِ',null)+wHTML('ٱلرَّحْمَٰنِ',null)+wHTML('ٱلرَّحِيمِ',null)
+        +'</div>';return;
+    }
+    var wc=line.filter(function(t){return t.type==='word';}).length;
+    h+='<div class="qline'+(wc<=3?' c':'')+'\">';
+    line.forEach(function(tok){
+      if(tok.type==='end')h+=endHTML(tok.surah,tok.ayah);
+      else h+=wHTML(tok.text,tok.rule);
+    });
+    h+='</div>';
+  });
+
+  h+='</div>';
+  h+='<div class="pg-ft">اضغط اسم الحكم للشرح والصوت · اضغط ﴿الآية﴾ للاستماع</div>';
+  return h;
+}
+
+function bindEvents(){
+  document.querySelectorAll('.avn').forEach(function(el){
+    el.onclick=function(){playAyah(+el.dataset.s,+el.dataset.a);};
+  });
+  document.querySelectorAll('.tw-l').forEach(function(el){
+    el.onclick=function(e){e.stopPropagation();showP(el.dataset.cls,el.dataset.lbl,el.dataset.rsn);};
+  });
+}
+
+async function loadSpread(){
+  syncNav();
+  var rEl=document.getElementById('pR'),lEl=document.getElementById('pL');
+  rEl.innerHTML='<div class="msg">جارٍ التحميل…</div>';
+  lEl.innerHTML='<div class="msg">جارٍ التحميل…</div>';
+  var res=await Promise.all([fetchPage(curPage),fetchPage(curPage+1)]);
+  rEl.innerHTML=renderOnePage(res[0],curPage);
+  lEl.innerHTML=curPage+1<=TOTAL?renderOnePage(res[1],curPage+1):'';
+  bindEvents();
+}
+
+loadSpread();
+</script>
+</body>
+</html>
